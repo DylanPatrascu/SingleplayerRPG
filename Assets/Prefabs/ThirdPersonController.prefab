@@ -4891,10 +4891,10 @@ MonoBehaviour:
   CameraSide: 1
   CameraDistance: 3
   AvoidObstacles:
-    Enabled: 0
+    Enabled: 1
     CollisionFilter:
       serializedVersion: 2
-      m_Bits: 1
+      m_Bits: 65
     IgnoreTag: 
     CameraRadius: 0.2
     DampingIntoCollision: 0
@@ -6161,6 +6161,7 @@ GameObject:
   - component: {fileID: 1836167741641725325}
   - component: {fileID: 8760810593948904107}
   - component: {fileID: 5112165222938595329}
+  - component: {fileID: 6758029036777472965}
   m_Layer: 7
   m_Name: ThirdPersonController
   m_TagString: Untagged
@@ -6318,6 +6319,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9e45a7a4f9bd4614ab2131b2e8a8a09e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cinemachineCamera: {fileID: 896089309939694765}
+  _cameraZoomSpeed: 0.1
+  _cameraMinZoom: 1
+  _cameraMaxZoom: 5
+--- !u!114 &6758029036777472965
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8888235976125259846}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b84e34c33b905f4e9a0374a3e7c12d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &8900825730424643876
