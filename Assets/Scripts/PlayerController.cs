@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour
     public float drag = 0.1f;
     public float movingThreshold = 0.01f;
     public float gravity = 25f;
+    public float terminalVelocity = 50f;
     public float jumpSpeed = 1.0f;
 
     [Header("Animation")]
@@ -116,6 +117,11 @@ public class PlayerController : MonoBehaviour
         if (_playerState.IsStateGroundedState(_lastMovementState) & isGrounded)
         {
             _verticalVelocity += _antiBump;
+        }
+
+        if (Mathf.Abs(_verticalVelocity) > Mathf.Abs(terminalVelocity))
+        {
+            _verticalVelocity = -1 * Mathf.Abs(terminalVelocity);
         }
     }
 
