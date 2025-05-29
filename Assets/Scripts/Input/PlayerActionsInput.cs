@@ -1,4 +1,3 @@
-using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -7,6 +6,11 @@ public class PlayerActionsInput : MonoBehaviour, PlayerControls.IPlayerActionMap
 {
     private PlayerLocomotionInput _playerLocomotionInput;
     private PlayerState _playerState;
+
+    private float _comboTimer = 1f;
+    private float _lastAttackTime = -Mathf.Infinity;
+
+    public bool AttackCombo { get; private set; }
     public bool AttackPressed { get; private set; }
     public bool GatherPressed { get; private set; }
 
@@ -54,6 +58,19 @@ public class PlayerActionsInput : MonoBehaviour, PlayerControls.IPlayerActionMap
         }
 
         AttackPressed = true;
+
+        float currentTime = Time.time;
+
+        if (currentTime - _lastAttackTime <= _comboTimer)
+        {
+            AttackCombo = true;
+            print("ATTACK COMBO!!!");
+        }
+        else
+        {
+            AttackCombo = false;
+        }
+        _lastAttackTime = currentTime;
     }
 
     public void OnGather(InputAction.CallbackContext context)
@@ -70,6 +87,11 @@ public class PlayerActionsInput : MonoBehaviour, PlayerControls.IPlayerActionMap
     {
         AttackPressed = false;
     }
+    public void ResetAttackCombo()
+    {
+        AttackCombo = false;
+    }
+
     public void SetGatherPressedFalse()
     {
         GatherPressed = false;

@@ -6232,10 +6232,11 @@ MonoBehaviour:
   sprintSpeed: 7
   inAirAcceleration: 25
   drag: 20
+  inAirDrag: 15
   movingThreshold: 0.01
   gravity: 25
   terminalVelocity: 50
-  jumpSpeed: 1
+  jumpSpeed: 0.8
   playerModelRotationSpeed: 10
   rotateToTargetTime: 0.68
   lookSenseH: 0.1
@@ -6276,7 +6277,7 @@ CharacterController:
   m_Enabled: 1
   serializedVersion: 3
   m_Height: 1.8
-  m_Radius: 0.3
+  m_Radius: 0.225
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.01
