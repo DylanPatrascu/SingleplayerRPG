@@ -6,13 +6,15 @@ public class PlayerActionsInput : MonoBehaviour, PlayerControls.IPlayerActionMap
 {
     private PlayerLocomotionInput _playerLocomotionInput;
     private PlayerState _playerState;
-    public bool AttackPressed { get; private set; }
+    public bool UnsheathToggle { get; private set; }
+    public bool UnSheathPressed { get; private set; }
     public bool GatherPressed { get; private set; }
 
     private void Awake()
     {
         _playerLocomotionInput = GetComponent<PlayerLocomotionInput>();
         _playerState = GetComponent<PlayerState>();
+        UnSheathPressed = false;
     }
     private void Update()
     {
@@ -45,15 +47,23 @@ public class PlayerActionsInput : MonoBehaviour, PlayerControls.IPlayerActionMap
         PlayerInputManager.Instance.PlayerControls.PlayerActionMap.RemoveCallbacks(this);
     }
 
-    public void OnAttack(InputAction.CallbackContext context)
+    public void OnUnsheath(InputAction.CallbackContext context)
     {
         if(!context.performed)
         {
             return;
         }
+        UnSheathPressed = true;
+        Debug.Log("HI");
 
-        AttackPressed = true;
-
+    }
+    public void ToggleUnsheath()
+    {
+        UnsheathToggle = !UnsheathToggle;
+    }
+    public void SetUnsheathPressedFalse()
+    {
+        UnSheathPressed = false;
     }
 
     public void OnGather(InputAction.CallbackContext context)
@@ -66,14 +76,10 @@ public class PlayerActionsInput : MonoBehaviour, PlayerControls.IPlayerActionMap
         GatherPressed = true;
     }
 
-    public void SetAttackPressedFalse()
-    {
-        AttackPressed = false;
-    }
-  
 
     public void SetGatherPressedFalse()
     {
         GatherPressed = false;
     }
+
 }

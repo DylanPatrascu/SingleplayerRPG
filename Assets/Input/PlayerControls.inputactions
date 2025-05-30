@@ -241,7 +241,7 @@
             "id": "232c8806-14e4-44cd-8a4f-5c6db97763d7",
             "actions": [
                 {
-                    "name": "Attack",
+                    "name": "Unsheath",
                     "type": "Button",
                     "id": "aeb4882b-717e-4cbd-ac84-6543bd31a81b",
                     "expectedControlType": "",
@@ -263,11 +263,11 @@
                 {
                     "name": "",
                     "id": "c6afc1b7-3502-4d88-be1e-995764bc0f50",
-                    "path": "<Mouse>/leftButton",
+                    "path": "<Keyboard>/x",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Attack",
+                    "action": "Unsheath",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

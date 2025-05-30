@@ -327,7 +327,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             ""id"": ""232c8806-14e4-44cd-8a4f-5c6db97763d7"",
             ""actions"": [
                 {
-                    ""name"": ""Attack"",
+                    ""name"": ""Unsheath"",
                     ""type"": ""Button"",
                     ""id"": ""aeb4882b-717e-4cbd-ac84-6543bd31a81b"",
                     ""expectedControlType"": """",
@@ -349,11 +349,11 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""c6afc1b7-3502-4d88-be1e-995764bc0f50"",
-                    ""path"": ""<Mouse>/leftButton"",
+                    ""path"": ""<Keyboard>/x"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Attack"",
+                    ""action"": ""Unsheath"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -385,7 +385,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_ThirdPersonMap_ScrollCamera = m_ThirdPersonMap.FindAction("ScrollCamera", throwIfNotFound: true);
         // PlayerActionMap
         m_PlayerActionMap = asset.FindActionMap("PlayerActionMap", throwIfNotFound: true);
-        m_PlayerActionMap_Attack = m_PlayerActionMap.FindAction("Attack", throwIfNotFound: true);
+        m_PlayerActionMap_Unsheath = m_PlayerActionMap.FindAction("Unsheath", throwIfNotFound: true);
         m_PlayerActionMap_Gather = m_PlayerActionMap.FindAction("Gather", throwIfNotFound: true);
     }
 
@@ -705,7 +705,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     // PlayerActionMap
     private readonly InputActionMap m_PlayerActionMap;
     private List<IPlayerActionMapActions> m_PlayerActionMapActionsCallbackInterfaces = new List<IPlayerActionMapActions>();
-    private readonly InputAction m_PlayerActionMap_Attack;
+    private readonly InputAction m_PlayerActionMap_Unsheath;
     private readonly InputAction m_PlayerActionMap_Gather;
     /// <summary>
     /// Provides access to input actions defined in input action map "PlayerActionMap".
@@ -719,9 +719,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// </summary>
         public PlayerActionMapActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
         /// <summary>
-        /// Provides access to the underlying input action "PlayerActionMap/Attack".
+        /// Provides access to the underlying input action "PlayerActionMap/Unsheath".
         /// </summary>
-        public InputAction @Attack => m_Wrapper.m_PlayerActionMap_Attack;
+        public InputAction @Unsheath => m_Wrapper.m_PlayerActionMap_Unsheath;
         /// <summary>
         /// Provides access to the underlying input action "PlayerActionMap/Gather".
         /// </summary>
@@ -752,9 +752,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         {
             if (instance == null || m_Wrapper.m_PlayerActionMapActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_PlayerActionMapActionsCallbackInterfaces.Add(instance);
-            @Attack.started += instance.OnAttack;
-            @Attack.performed += instance.OnAttack;
-            @Attack.canceled += instance.OnAttack;
+            @Unsheath.started += instance.OnUnsheath;
+            @Unsheath.performed += instance.OnUnsheath;
+            @Unsheath.canceled += instance.OnUnsheath;
             @Gather.started += instance.OnGather;
             @Gather.performed += instance.OnGather;
             @Gather.canceled += instance.OnGather;
@@ -769,9 +769,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// <seealso cref="PlayerActionMapActions" />
         private void UnregisterCallbacks(IPlayerActionMapActions instance)
         {
-            @Attack.started -= instance.OnAttack;
-            @Attack.performed -= instance.OnAttack;
-            @Attack.canceled -= instance.OnAttack;
+            @Unsheath.started -= instance.OnUnsheath;
+            @Unsheath.performed -= instance.OnUnsheath;
+            @Unsheath.canceled -= instance.OnUnsheath;
             @Gather.started -= instance.OnGather;
             @Gather.performed -= instance.OnGather;
             @Gather.canceled -= instance.OnGather;
@@ -874,12 +874,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     public interface IPlayerActionMapActions
     {
         /// <summary>
-        /// Method invoked when associated input action "Attack" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "Unsheath" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnAttack(InputAction.CallbackContext context);
+        void OnUnsheath(InputAction.CallbackContext context);
         /// <summary>
         /// Method invoked when associated input action "Gather" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
