@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 [DefaultExecutionOrder(-2)]
 public class PlayerLocomotionInput : MonoBehaviour, PlayerControls.IPlayerLocomotionMapActions
 {
+
     [SerializeField] private bool holdToSprint = true;
     public bool SprintToggledOn { get; private set; }
     public bool WalkToggledOn { get; private set; }
@@ -69,7 +70,7 @@ public class PlayerLocomotionInput : MonoBehaviour, PlayerControls.IPlayerLocomo
         {
             return;
         }
-
+        
         JumpPressed = true;
     }
 

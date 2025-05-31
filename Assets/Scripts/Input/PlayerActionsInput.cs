@@ -10,6 +10,11 @@ public class PlayerActionsInput : MonoBehaviour, PlayerControls.IPlayerActionMap
     public bool UnSheathPressed { get; private set; }
     public bool GatherPressed { get; private set; }
 
+    public bool AttackPressed { get; private set; }
+
+    [SerializeField] private GameObject Sheath;
+    [SerializeField] private GameObject Joint;
+
     private void Awake()
     {
         _playerLocomotionInput = GetComponent<PlayerLocomotionInput>();
@@ -54,12 +59,17 @@ public class PlayerActionsInput : MonoBehaviour, PlayerControls.IPlayerActionMap
             return;
         }
         UnSheathPressed = true;
-        Debug.Log("HI");
 
     }
     public void ToggleUnsheath()
     {
         UnsheathToggle = !UnsheathToggle;
+    }
+
+    public void ShowUnsheath()
+    {
+        Sheath.SetActive(!Sheath.activeSelf);
+        Joint.SetActive(!Joint.activeSelf);
     }
     public void SetUnsheathPressedFalse()
     {
@@ -82,4 +92,21 @@ public class PlayerActionsInput : MonoBehaviour, PlayerControls.IPlayerActionMap
         GatherPressed = false;
     }
 
+    public void OnAttack(InputAction.CallbackContext context)
+    {
+        if (!context.performed)
+        {
+            return;
+        }
+
+        if(UnsheathToggle)
+        {
+            AttackPressed = true;
+        }
+    }
+
+    public void SetAttackPressedFalse()
+    {
+        AttackPressed = false;
+    }
 }

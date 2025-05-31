@@ -343,6 +343,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Attack"",
+                    ""type"": ""Button"",
+                    ""id"": ""0fac2853-68d0-4dee-9b48-6470e1857b95"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -367,6 +376,17 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""Gather"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""61820224-145c-4043-a492-9bf2365d416d"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Attack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -387,6 +407,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_PlayerActionMap = asset.FindActionMap("PlayerActionMap", throwIfNotFound: true);
         m_PlayerActionMap_Unsheath = m_PlayerActionMap.FindAction("Unsheath", throwIfNotFound: true);
         m_PlayerActionMap_Gather = m_PlayerActionMap.FindAction("Gather", throwIfNotFound: true);
+        m_PlayerActionMap_Attack = m_PlayerActionMap.FindAction("Attack", throwIfNotFound: true);
     }
 
     ~@PlayerControls()
@@ -707,6 +728,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private List<IPlayerActionMapActions> m_PlayerActionMapActionsCallbackInterfaces = new List<IPlayerActionMapActions>();
     private readonly InputAction m_PlayerActionMap_Unsheath;
     private readonly InputAction m_PlayerActionMap_Gather;
+    private readonly InputAction m_PlayerActionMap_Attack;
     /// <summary>
     /// Provides access to input actions defined in input action map "PlayerActionMap".
     /// </summary>
@@ -726,6 +748,10 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "PlayerActionMap/Gather".
         /// </summary>
         public InputAction @Gather => m_Wrapper.m_PlayerActionMap_Gather;
+        /// <summary>
+        /// Provides access to the underlying input action "PlayerActionMap/Attack".
+        /// </summary>
+        public InputAction @Attack => m_Wrapper.m_PlayerActionMap_Attack;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -758,6 +784,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Gather.started += instance.OnGather;
             @Gather.performed += instance.OnGather;
             @Gather.canceled += instance.OnGather;
+            @Attack.started += instance.OnAttack;
+            @Attack.performed += instance.OnAttack;
+            @Attack.canceled += instance.OnAttack;
         }
 
         /// <summary>
@@ -775,6 +804,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Gather.started -= instance.OnGather;
             @Gather.performed -= instance.OnGather;
             @Gather.canceled -= instance.OnGather;
+            @Attack.started -= instance.OnAttack;
+            @Attack.performed -= instance.OnAttack;
+            @Attack.canceled -= instance.OnAttack;
         }
 
         /// <summary>
@@ -887,5 +919,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnGather(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Attack" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnAttack(InputAction.CallbackContext context);
     }
 }

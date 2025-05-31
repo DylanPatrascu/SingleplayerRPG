@@ -18,9 +18,12 @@ public class PlayerAnimation : MonoBehaviour
     private static int isGroundedHash = Animator.StringToHash("IsGrounded");
     private static int isFallingHash = Animator.StringToHash("IsFalling");
     private static int isJumpingHash = Animator.StringToHash("IsJumping");
+    
     // Actions
     private static int isUnsheathingHash = Animator.StringToHash("IsUnsheathing");
-    private static int isSheathedHash= Animator.StringToHash("IsUnsheathed");
+    private static int isSheathedHash = Animator.StringToHash("IsUnsheathed");
+    private static int isAttackingHash = Animator.StringToHash("IsAttacking");
+
 
     private static int isGatheringHash = Animator.StringToHash("IsGathering");
     private static int isPlayingActionHash = Animator.StringToHash("IsPlayingAction");
@@ -44,7 +47,7 @@ public class PlayerAnimation : MonoBehaviour
         _playerActionsInput = GetComponent<PlayerActionsInput>();
 
         // Interruptable
-        actionHashes = new int[] { isGatheringHash };
+        actionHashes = new int[] { isGatheringHash, isAttackingHash };
     }
 
     private void Update()
@@ -70,8 +73,10 @@ public class PlayerAnimation : MonoBehaviour
         _animator.SetBool(isGroundedHash, isGrounded);
         _animator.SetBool(isFallingHash, isFalling);
         _animator.SetBool(isJumpingHash, isJumping);
+
         _animator.SetBool(isUnsheathingHash, _playerActionsInput.UnSheathPressed);
         _animator.SetBool(isSheathedHash, _playerActionsInput.UnsheathToggle);
+        _animator.SetBool(isAttackingHash, _playerActionsInput.AttackPressed);
 
         _animator.SetBool(isGatheringHash, _playerActionsInput.GatherPressed);
         _animator.SetBool(isPlayingActionHash, isPlayingAction);
