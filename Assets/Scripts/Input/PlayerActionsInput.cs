@@ -7,10 +7,12 @@ public class PlayerActionsInput : MonoBehaviour, PlayerControls.IPlayerActionMap
     private PlayerLocomotionInput _playerLocomotionInput;
     private PlayerState _playerState;
     public bool UnsheathToggle { get; private set; }
-    public bool UnSheathPressed { get; private set; }
+    public bool UnSheathPressed { get; private set; } = false;
     public bool GatherPressed { get; private set; }
-
     public bool AttackPressed { get; private set; }
+
+    private PlayerCombatState _lastCombatState = PlayerCombatState.NotDrawn;
+
 
     [SerializeField] private GameObject Sheath;
     [SerializeField] private GameObject Joint;
@@ -19,10 +21,11 @@ public class PlayerActionsInput : MonoBehaviour, PlayerControls.IPlayerActionMap
     {
         _playerLocomotionInput = GetComponent<PlayerLocomotionInput>();
         _playerState = GetComponent<PlayerState>();
-        UnSheathPressed = false;
     }
     private void Update()
     {
+        _lastCombatState = _playerState.CurrentPlayerCombatState;
+
         if (_playerLocomotionInput.MovementInput != Vector2.zero || _playerState.CurrentPlayerMovementState == PlayerMovementState.Jumping || _playerState.CurrentPlayerMovementState == PlayerMovementState.Falling)
         {
             GatherPressed = false;
@@ -64,6 +67,7 @@ public class PlayerActionsInput : MonoBehaviour, PlayerControls.IPlayerActionMap
     public void ToggleUnsheath()
     {
         UnsheathToggle = !UnsheathToggle;
+        _playerState.SetPlayerCombatState(UnsheathToggle ? PlayerCombatState.Drawn : PlayerCombatState.NotDrawn);
     }
 
     public void ShowUnsheath()
@@ -84,12 +88,15 @@ public class PlayerActionsInput : MonoBehaviour, PlayerControls.IPlayerActionMap
         }
 
         GatherPressed = true;
+        _playerState.SetPlayerCombatState(PlayerCombatState.Gathering);
     }
 
 
     public void SetGatherPressedFalse()
     {
         GatherPressed = false;
+        _playerState.SetPlayerCombatState(_lastCombatState);
+
     }
 
     public void OnAttack(InputAction.CallbackContext context)
@@ -102,11 +109,14 @@ public class PlayerActionsInput : MonoBehaviour, PlayerControls.IPlayerActionMap
         if(UnsheathToggle)
         {
             AttackPressed = true;
+            _playerState.SetPlayerCombatState(PlayerCombatState.Attacking);
+
         }
     }
 
     public void SetAttackPressedFalse()
     {
         AttackPressed = false;
+        _playerState.SetPlayerCombatState(PlayerCombatState.Drawn);
     }
 }
