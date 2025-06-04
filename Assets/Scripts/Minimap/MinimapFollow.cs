@@ -19,7 +19,7 @@ public class MinimapFollow : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
-        Vector3 camPosition = new Vector3(_player.transform.position.x, 20f, _player.transform.position.z);
+        Vector3 camPosition = new Vector3(_player.transform.position.x, _player.transform.position.y + 20f, _player.transform.position.z);
         transform.position = camPosition;
         _camera.orthographicSize = _cameraZoom;
         if(_rotateWithCamera)
