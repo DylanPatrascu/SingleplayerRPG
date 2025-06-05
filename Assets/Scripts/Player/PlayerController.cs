@@ -69,14 +69,15 @@ public class PlayerController : MonoBehaviour
     private void UpdateMovementState()
     {
         _lastMovementState = _playerState.CurrentPlayerMovementState;
+        bool canMove = CanMove();
         bool canRun = CanRun();
         bool isMovementInput = _playerLocomotionInput.MovementInput != Vector2.zero;
         bool isMovingLaterally = IsMovingLaterally();
         bool isSprinting = _playerLocomotionInput.SprintToggledOn && isMovingLaterally;
-        bool isWalking = isMovingLaterally && (!canRun || _playerLocomotionInput.WalkToggledOn);
+        bool isWalking = isMovingLaterally && (!canRun || (canMove && _playerLocomotionInput.WalkToggledOn));
         bool isGrounded = IsGrounded();
 
-        PlayerMovementState lateralState = isWalking ? PlayerMovementState.Walking : isSprinting ? PlayerMovementState.Sprinting : isMovingLaterally || isMovementInput ? PlayerMovementState.Running : PlayerMovementState.Idling;
+        PlayerMovementState lateralState = isWalking ? PlayerMovementState.Walking : isSprinting ? PlayerMovementState.Sprinting : (isMovingLaterally || isMovementInput ) && canMove ? PlayerMovementState.Running : PlayerMovementState.Idling;
         _playerState.SetPlayerMovementState(lateralState);
 
         // Control Airborne State
@@ -149,6 +150,7 @@ public class PlayerController : MonoBehaviour
         newVelocity = Vector3.ClampMagnitude(new Vector3(newVelocity.x, 0f, newVelocity.z), clampLateralMagnitude);
         newVelocity.y += _verticalVelocity;
         newVelocity = !isGrounded ? HandleSteepWalls(newVelocity) : newVelocity;
+        newVelocity = CanMove() ? newVelocity : Vector3.zero;
 
         // Only call once per frame
         _characterController.Move(newVelocity * Time.deltaTime);
@@ -260,5 +262,10 @@ public class PlayerController : MonoBehaviour
     private bool CanRun()
     {
         return _playerLocomotionInput.MovementInput.y >= Mathf.Abs(_playerLocomotionInput.MovementInput.x);
+    }
+
+    private bool CanMove()
+    {
+        return _playerState.CurrentPlayerCombatState != PlayerCombatState.Attacking; 
     }
 }

@@ -6,7 +6,9 @@ public class MinimapFollow : MonoBehaviour
     [SerializeField] private Transform _player;
     [SerializeField] private Transform _icon;
     
-    [Range(8f, 20f)] public float _cameraZoom = 15f;
+    [Range(8f, 50f)] public float _cameraZoom = 15f;
+    [Range(20f, 50f)] public float _cameraHeight = 20f;
+
     public bool _rotateWithCamera = false;
 
     private Camera _camera;
@@ -19,7 +21,7 @@ public class MinimapFollow : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
-        Vector3 camPosition = new Vector3(_player.transform.position.x, _player.transform.position.y + 20f, _player.transform.position.z);
+        Vector3 camPosition = new Vector3(_player.transform.position.x, _player.transform.position.y + _cameraHeight, _player.transform.position.z);
         transform.position = camPosition;
         _camera.orthographicSize = _cameraZoom;
         if(_rotateWithCamera)

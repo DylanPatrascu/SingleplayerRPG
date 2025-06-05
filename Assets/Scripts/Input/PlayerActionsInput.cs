@@ -106,11 +106,15 @@ public class PlayerActionsInput : MonoBehaviour, PlayerControls.IPlayerActionMap
             return;
         }
 
+        if (_playerState.CurrentPlayerMovementState == PlayerMovementState.Jumping || _playerState.CurrentPlayerMovementState == PlayerMovementState.Falling)
+        {
+            return;
+        }
+
         if(UnsheathToggle)
         {
             AttackPressed = true;
             _playerState.SetPlayerCombatState(PlayerCombatState.Attacking);
-
         }
     }
 
@@ -118,5 +122,10 @@ public class PlayerActionsInput : MonoBehaviour, PlayerControls.IPlayerActionMap
     {
         AttackPressed = false;
         _playerState.SetPlayerCombatState(PlayerCombatState.Drawn);
+        Weapon weapon = Joint.GetComponentInChildren<Weapon>();
+        if (weapon != null)
+        {
+            weapon.DamageDealt = false;
+        }
     }
 }

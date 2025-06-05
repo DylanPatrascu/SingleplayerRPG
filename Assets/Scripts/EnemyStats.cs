@@ -34,5 +34,6 @@ public class EnemyStats : MonoBehaviour
     {
         IsDead = true;
         Debug.Log("Enemy DEAD");
+        Object.Destroy(this.gameObject);
     }
 }

@@ -8,39 +8,22 @@ public class Weapon : MonoBehaviour
     public float Damage = 30f;
     public float CritChance = 25f;
     public float CritDamage = 1.25f;
-
-    private bool _hasDealtDamage = false;
+    public bool DamageDealt = false;
 
     private void OnTriggerEnter(Collider other)
     {
-        if (_playerState.CurrentPlayerCombatState != PlayerCombatState.Attacking)
-        {
-            ResetAttack();
-        }
 
-        if (_hasDealtDamage)
-        {
-            return;
-        }
-
-        if (other.CompareTag("Enemy") && _playerState.CurrentPlayerCombatState == PlayerCombatState.Attacking)
+        if (other.CompareTag("Enemy") && _playerState.CurrentPlayerCombatState == PlayerCombatState.Attacking && !DamageDealt)
         {
             EnemyStats enemyStats = other.GetComponent<EnemyStats>();
             enemyStats.TakeDamage(DealDamage());
-            _hasDealtDamage = true;
         }
     }
-
-    public void ResetAttack()
-    {
-        _hasDealtDamage = false;
-    }
-
 
     public float DealDamage()
     {
         float dmg = Damage + IsCrit();
-        Debug.Log(dmg);
+        DamageDealt = true;
         return dmg;
     }
 
