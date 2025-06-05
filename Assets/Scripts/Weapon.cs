@@ -12,18 +12,25 @@ public class Weapon : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-
         if (other.CompareTag("Enemy") && _playerState.CurrentPlayerCombatState == PlayerCombatState.Attacking && !DamageDealt)
         {
             EnemyStats enemyStats = other.GetComponent<EnemyStats>();
-            enemyStats.TakeDamage(DealDamage());
+            PlayerStats playerStats = GetComponentInParent<PlayerStats>();
+
+            float damage = DealDamage();
+            enemyStats.TakeDamage(damage, playerStats);
+
+            if (enemyStats.GetHealth() <= 0 && !enemyStats.GetDead())
+            {
+                enemyStats.Die(playerStats);
+            }
+            DamageDealt = true;
         }
     }
 
     public float DealDamage()
     {
         float dmg = Damage + IsCrit();
-        DamageDealt = true;
         return dmg;
     }
 

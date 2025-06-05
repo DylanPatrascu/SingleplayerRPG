@@ -2,14 +2,15 @@ using UnityEngine;
 
 public class PlayerStats : MonoBehaviour
 {
-    public float Health { get; private set; }
-    public float MaxHealth { get; private set; }
-    public float Level { get; private set; }
-    public float MaxLevel { get; private set; }
-    public float Exp { get; private set; }
-    public float MaxExp { get; private set; }
-    public float Stamina { get; private set; }
-    public bool IsDead { get; private set; } = false;
+    [SerializeField] private float Health;
+    [SerializeField] private float MaxHealth;
+    [SerializeField] private float Level;
+    [SerializeField] private float MaxLevel;
+    [SerializeField] private float Exp;
+    [SerializeField] private float MaxExp;
+    [SerializeField] private float Stamina;
+    [SerializeField] private float Gold;
+    [SerializeField] private bool IsDead = false;
 
     public void Heal(float hp)
     {
@@ -45,6 +46,11 @@ public class PlayerStats : MonoBehaviour
         {
             Level = MaxLevel;
         }
+    }
+
+    public void GainGold(float gold)
+    {
+        Gold += gold;
     }
 
     public void Die()

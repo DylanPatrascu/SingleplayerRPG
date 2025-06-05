@@ -437,7 +437,7 @@ GameObject:
   - component: {fileID: 549720548}
   - component: {fileID: 549720547}
   - component: {fileID: 549720546}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Terrain_(1000.00, 0.00, 0.00)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -530,7 +530,7 @@ GameObject:
   - component: {fileID: 606743608}
   - component: {fileID: 606743607}
   - component: {fileID: 606743606}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Terrain_(2000.00, 0.00, 1000.00)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -718,6 +718,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -3
       objectReference: {fileID: 0}
+    - target: {fileID: 896089309939694765, guid: bc278a3e4f1c22b41b1101ddd0d166d4, type: 3}
+      propertyPath: Lens.FarClipPlane
+      value: 1000
+      objectReference: {fileID: 0}
     - target: {fileID: 2047773846662476243, guid: bc278a3e4f1c22b41b1101ddd0d166d4, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -799,6 +803,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9182140354546143978, guid: bc278a3e4f1c22b41b1101ddd0d166d4, type: 3}
+      propertyPath: far clip plane
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 9182140354546143978, guid: bc278a3e4f1c22b41b1101ddd0d166d4, type: 3}
       propertyPath: m_SensorSize.x
       value: 21.946
       objectReference: {fileID: 0}
@@ -835,7 +843,7 @@ GameObject:
   - component: {fileID: 895607728}
   - component: {fileID: 895607727}
   - component: {fileID: 895607726}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Terrain_(2000.00, 0.00, 0.00)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1016,7 +1024,7 @@ GameObject:
   - component: {fileID: 1083854763}
   - component: {fileID: 1083854762}
   - component: {fileID: 1083854761}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Terrain_(1000.00, 0.00, 1000.00)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1550,7 +1558,7 @@ GameObject:
   - component: {fileID: 1434109186}
   - component: {fileID: 1434109185}
   - component: {fileID: 1434109184}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Terrain_(0.00, 0.00, 1000.00)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1660,6 +1668,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fd1472420b5cce46af9ab6b403cfbc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 100
+  MaxHealth: 100
+  Level: 1
+  MaxLevel: 99
+  Exp: 0
+  MaxExp: 100
+  Stamina: 100
+  Gold: 0
+  IsDead: 0
 --- !u!1 &1836462141
 GameObject:
   m_ObjectHideFlags: 0
@@ -2004,8 +2021,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Health: 100
   MaxHealth: 100
-  Level: 5
+  Level: 1
   ExpGranted: 10
+  GoldGranted: 10
   IsDead: 0
 --- !u!54 &1892154996
 Rigidbody:
@@ -2102,6 +2120,7 @@ MonoBehaviour:
   Damage: 30
   CritChance: 25
   CritDamage: 1.25
+  DamageDealt: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
