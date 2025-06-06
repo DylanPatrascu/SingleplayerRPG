@@ -11,8 +11,6 @@ public class PlayerActionsInput : MonoBehaviour, PlayerControls.IPlayerActionMap
     public bool GatherPressed { get; private set; }
     public bool AttackPressed { get; private set; }
 
-    private PlayerCombatState _lastCombatState = PlayerCombatState.NotDrawn;
-
 
     [SerializeField] private GameObject Sheath;
     [SerializeField] private GameObject Joint;
@@ -24,13 +22,20 @@ public class PlayerActionsInput : MonoBehaviour, PlayerControls.IPlayerActionMap
     }
     private void Update()
     {
-        _lastCombatState = _playerState.CurrentPlayerCombatState;
+        bool isDefaultCombatState =
+            _playerState.CurrentPlayerCombatState == PlayerCombatState.Gathering ||
+            _playerState.CurrentPlayerCombatState == PlayerCombatState.NotDrawn ||
+            _playerState.CurrentPlayerCombatState == PlayerCombatState.Drawn;
 
-        if (_playerLocomotionInput.MovementInput != Vector2.zero || _playerState.CurrentPlayerMovementState == PlayerMovementState.Jumping || _playerState.CurrentPlayerMovementState == PlayerMovementState.Falling)
+        if ((_playerLocomotionInput.MovementInput != Vector2.zero ||
+            _playerState.CurrentPlayerMovementState == PlayerMovementState.Jumping ||
+            _playerState.CurrentPlayerMovementState == PlayerMovementState.Falling) && isDefaultCombatState)
         {
             GatherPressed = false;
+            _playerState.SetPlayerCombatState(UnsheathToggle ? PlayerCombatState.Drawn : PlayerCombatState.NotDrawn);
         }
     }
+
     private void OnEnable()
     {
         if (PlayerInputManager.Instance?.PlayerControls == null)
@@ -81,7 +86,7 @@ public class PlayerActionsInput : MonoBehaviour, PlayerControls.IPlayerActionMap
     }
 
     public void OnGather(InputAction.CallbackContext context)
-    {
+    {   
         if (!context.performed)
         {
             return;
@@ -95,7 +100,7 @@ public class PlayerActionsInput : MonoBehaviour, PlayerControls.IPlayerActionMap
     public void SetGatherPressedFalse()
     {
         GatherPressed = false;
-        _playerState.SetPlayerCombatState(_lastCombatState);
+        _playerState.SetPlayerCombatState(UnsheathToggle ? PlayerCombatState.Drawn : PlayerCombatState.NotDrawn);
 
     }
 
@@ -107,6 +112,10 @@ public class PlayerActionsInput : MonoBehaviour, PlayerControls.IPlayerActionMap
         }
 
         if (_playerState.CurrentPlayerMovementState == PlayerMovementState.Jumping || _playerState.CurrentPlayerMovementState == PlayerMovementState.Falling)
+        {
+            return;
+        }
+        if(AttackPressed)
         {
             return;
         }

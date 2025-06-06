@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 
 public class PlayerStats : MonoBehaviour
@@ -11,6 +12,8 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] private float Stamina;
     [SerializeField] private float Gold;
     [SerializeField] private bool IsDead = false;
+
+    [SerializeField] private Quest quest;
 
     public void Heal(float hp)
     {
@@ -42,6 +45,7 @@ public class PlayerStats : MonoBehaviour
     public void LevelUp()
     {
         Level++;
+        Exp = 0;
         if (Level > MaxLevel)
         {
             Level = MaxLevel;
@@ -51,6 +55,16 @@ public class PlayerStats : MonoBehaviour
     public void GainGold(float gold)
     {
         Gold += gold;
+    }
+
+    public void AddQuest(Quest q)
+    {
+        quest = q;
+    }
+
+    public Quest GetQuest()
+    {
+        return quest;
     }
 
     public void Die()
