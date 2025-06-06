@@ -13,7 +13,7 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] private float Gold;
     [SerializeField] private bool IsDead = false;
 
-    [SerializeField] private Quest quest;
+    public QuestInstance activeQuest;
 
     public void Heal(float hp)
     {
@@ -57,15 +57,17 @@ public class PlayerStats : MonoBehaviour
         Gold += gold;
     }
 
-    public void AddQuest(Quest q)
+
+    public void AddQuest(QuestSO questData)
     {
-        quest = q;
+        activeQuest = new QuestInstance(questData);
     }
 
-    public Quest GetQuest()
+    public QuestInstance GetQuest()
     {
-        return quest;
+        return activeQuest;
     }
+
 
     public void Die()
     {

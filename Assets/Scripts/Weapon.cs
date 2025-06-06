@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class Weapon : MonoBehaviour
 {
@@ -8,23 +9,27 @@ public class Weapon : MonoBehaviour
     public float Damage = 30f;
     public float CritChance = 25f;
     public float CritDamage = 1.25f;
-    public bool DamageDealt = false;
+
+    private HashSet<EnemyStats> _enemiesHit = new HashSet<EnemyStats>();
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Enemy") && _playerState.CurrentPlayerCombatState == PlayerCombatState.Attacking && !DamageDealt)
+        if (other.CompareTag("Enemy") && _playerState.CurrentPlayerCombatState == PlayerCombatState.Attacking)
         {
             EnemyStats enemyStats = other.GetComponent<EnemyStats>();
-            PlayerStats playerStats = GetComponentInParent<PlayerStats>();
+            if (enemyStats == null || _enemiesHit.Contains(enemyStats)) return;
 
+            PlayerStats playerStats = GetComponentInParent<PlayerStats>();
             float damage = DealDamage();
+
             enemyStats.TakeDamage(damage, playerStats);
 
             if (enemyStats.GetHealth() <= 0 && !enemyStats.GetDead())
             {
                 enemyStats.Die(playerStats);
             }
-            DamageDealt = true;
+
+            _enemiesHit.Add(enemyStats);
         }
     }
 
@@ -41,9 +46,11 @@ public class Weapon : MonoBehaviour
         {
             return CritDamage * Damage;
         }
-        else
-        {
-            return 0;
-        }
+        return 0;
+    }
+
+    public void ResetEnemiesHit()
+    {
+        _enemiesHit.Clear();
     }
 }

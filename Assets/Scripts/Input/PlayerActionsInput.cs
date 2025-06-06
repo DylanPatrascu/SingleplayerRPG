@@ -131,10 +131,12 @@ public class PlayerActionsInput : MonoBehaviour, PlayerControls.IPlayerActionMap
     {
         AttackPressed = false;
         _playerState.SetPlayerCombatState(PlayerCombatState.Drawn);
+
         Weapon weapon = Joint.GetComponentInChildren<Weapon>();
         if (weapon != null)
         {
-            weapon.DamageDealt = false;
+            weapon.ResetEnemiesHit();
         }
     }
+
 }

@@ -53,18 +53,19 @@ public class EnemyStats : MonoBehaviour
         {
             attacker.GainExp(ExpGranted);
             attacker.GainGold(GoldGranted);
-            Quest q = attacker.GetComponentInParent<PlayerStats>().GetQuest();
+            QuestInstance quest = attacker.GetQuest();
 
-            if(q.isActive && q.goal.goalType == GoalType.Kill)
+            if (quest != null && quest.isActive && quest.questData.goalType == GoalType.Kill)
             {
-                q.goal.EnemyKilled();
-                if(q.goal.IsReached())
+                quest.AddProgress();
+                if (quest.IsComplete())
                 {
-                    attacker.GainExp(q.expReward);
-                    attacker.GainGold(q.goldReward);
-                    q.Complete();
+                    attacker.GainExp(quest.questData.expReward);
+                    attacker.GainGold(quest.questData.goldReward);
+                    quest.Complete();
                 }
             }
+
         }
         Object.Destroy(this.gameObject);
     }
