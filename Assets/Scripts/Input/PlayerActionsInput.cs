@@ -10,6 +10,11 @@ public class PlayerActionsInput : MonoBehaviour, PlayerControls.IPlayerActionMap
     public bool UnSheathPressed { get; private set; } = false;
     public bool GatherPressed { get; private set; }
     public bool AttackPressed { get; private set; }
+    public bool IsComboing { get; private set; }
+
+    public float ComboTimer = 3f;
+    public float _lastAttackTime = float.NegativeInfinity;
+
 
 
     [SerializeField] private GameObject Sheath;
@@ -115,28 +120,52 @@ public class PlayerActionsInput : MonoBehaviour, PlayerControls.IPlayerActionMap
         {
             return;
         }
-        if(AttackPressed)
+
+        float currentTime = Time.time;
+
+        // Combo window
+        if (_playerState.CurrentPlayerCombatState == PlayerCombatState.Attacking && currentTime - _lastAttackTime <= ComboTimer)
         {
+            IsComboing = true;
+            _playerState.SetPlayerCombatState(PlayerCombatState.Comboing);
+            //_lastAttackTime = currentTime; // Optional: extend combo time window
             return;
         }
 
-        if(UnsheathToggle)
+        // Normal attack logic
+        if (UnsheathToggle && _playerState.CurrentPlayerCombatState == PlayerCombatState.Drawn)
         {
             AttackPressed = true;
             _playerState.SetPlayerCombatState(PlayerCombatState.Attacking);
+            _lastAttackTime = currentTime;
         }
     }
 
+
     public void SetAttackPressedFalse()
     {
+        
         AttackPressed = false;
-        _playerState.SetPlayerCombatState(PlayerCombatState.Drawn);
-
+        if(!IsComboing)_playerState.SetPlayerCombatState(PlayerCombatState.Drawn);
         Weapon weapon = Joint.GetComponentInChildren<Weapon>();
         if (weapon != null)
         {
             weapon.ResetEnemiesHit();
+        } else
+        {
+            Debug.Log("null");
         }
     }
+
+    public void SetComboFalse()
+    {
+        IsComboing = false;
+        SetAttackPressedFalse();
+        _playerState.SetPlayerCombatState(PlayerCombatState.Drawn);
+
+    }
+
+
+
 
 }

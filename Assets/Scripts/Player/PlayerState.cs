@@ -22,6 +22,7 @@ public enum PlayerCombatState
     Healing = 6,
     Dead = 7,
     Gathering = 8,
+    Comboing = 9,
 }
 
 public class PlayerState : MonoBehaviour

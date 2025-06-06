@@ -23,6 +23,8 @@ public class PlayerAnimation : MonoBehaviour
     private static int isUnsheathingHash = Animator.StringToHash("IsUnsheathing");
     private static int isSheathedHash = Animator.StringToHash("IsUnsheathed");
     private static int isAttackingHash = Animator.StringToHash("IsAttacking");
+    private static int isComboingHash = Animator.StringToHash("IsComboing");
+
 
 
     private static int isGatheringHash = Animator.StringToHash("IsGathering");
@@ -77,6 +79,8 @@ public class PlayerAnimation : MonoBehaviour
         _animator.SetBool(isUnsheathingHash, _playerActionsInput.UnSheathPressed);
         _animator.SetBool(isSheathedHash, _playerActionsInput.UnsheathToggle);
         _animator.SetBool(isAttackingHash, _playerActionsInput.AttackPressed);
+        _animator.SetBool(isComboingHash, _playerActionsInput.IsComboing);
+
 
         _animator.SetBool(isGatheringHash, _playerActionsInput.GatherPressed);
         _animator.SetBool(isPlayingActionHash, isPlayingAction);

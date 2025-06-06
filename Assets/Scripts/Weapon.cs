@@ -14,8 +14,10 @@ public class Weapon : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Enemy") && _playerState.CurrentPlayerCombatState == PlayerCombatState.Attacking)
+
+        if (other.CompareTag("Enemy") && (_playerState.CurrentPlayerCombatState == PlayerCombatState.Attacking || _playerState.CurrentPlayerCombatState == PlayerCombatState.Comboing))
         {
+            Debug.Log($"Hit {other.name} | State: {_playerState.CurrentPlayerCombatState}");
             EnemyStats enemyStats = other.GetComponent<EnemyStats>();
             if (enemyStats == null || _enemiesHit.Contains(enemyStats)) return;
 
