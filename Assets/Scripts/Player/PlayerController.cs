@@ -266,6 +266,7 @@ public class PlayerController : MonoBehaviour
 
     private bool CanMove()
     {
-        return _playerState.CurrentPlayerCombatState != PlayerCombatState.Attacking; 
+        //fix this ahahahah u can move when combo
+        return _playerState.CurrentPlayerCombatState != PlayerCombatState.Attacking && _playerState.CurrentPlayerCombatState != PlayerCombatState.Comboing; 
     }
 }
